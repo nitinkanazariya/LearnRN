@@ -1,0 +1,29 @@
+# React Native specific
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+# Android specific
+/android/
+/build/
+/.gradle/
+# iOS specific
+/ios/Pods/
+/ios/Podfile.lock
+/ios/build/
+/ios/DerivedData/
+# Miscellaneous
+*.log
+*.swp
+*.swo
+*.DS_Store
+.env     
+*.keystore
+*.jks
+.vscode/
+.idea/
+.vscode-test/
+*.iml
+# Metro bundler
+.metro/
