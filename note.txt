@@ -1,1 +1,9 @@
-1======>>>>.env setup
+[1]======>>>> .env setup
+=>> first install this comand - npm i react-native-config
+=>> add this line (android/app/build.gradle) - apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+=>> import this line - import Config from 'react-native-config'
+=>> create .env file and add key - (Api_Url=https://api.example.com)
+=>> use console.log(config.Api_Url)
+
+
+[2]======>>>> 
