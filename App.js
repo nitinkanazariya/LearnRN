@@ -1,12 +1,15 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import Home from './Src/Screen/home/home'
 import Config from 'react-native-config'
+import StackRoot from './Src/Root/Stack/StackRoot'
 
 const App = () => {
   console.log('env============================================>>>', Config.API_URL)
+
   return (
-    <Home />
+
+    <StackRoot />
+
   )
 }
 
