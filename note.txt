@@ -13,8 +13,10 @@
 
 
 [3]=====>>>>> Deeplinking (browser to app)
-=>> https://www.youtube.com/watch?v=8fHyN-tDDCI
+=>> https://www.youtube.com/watch?v=8fHyN-tDDCI - simple deeplinking
+=>> https://www.youtube.com/watch?v=PeSYh36_cZE -perams (product per item deeplinking )
 =>>
+=>>manually test==>>adb shell am start -W -a android.intent.action.VIEW -d "https://website4you.co.in" com.yourapp.package
 =>>What You'll Learn:
     1. Introduction to Deep Linking: Understand the basics of Android deep linking and its benefits.
     2. Creating Deep Links: Learn how to set up deep links in your Android app.
