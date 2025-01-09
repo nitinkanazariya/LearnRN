@@ -1,4 +1,4 @@
-[1]======>>>> .env setup
+[1]=====>>>>> .env setup
 =>> first install this comand - npm i react-native-config
 =>> add this line (android/app/build.gradle) - apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 =>> import this line - import Config from 'react-native-config'
@@ -6,4 +6,19 @@
 =>> use console.log(config.Api_Url)
 
 
-[2]======>>>> 
+[2]=====>>>>> Navigation
+=>> npm install @react-navigation/native
+=>> npm install react-native-screens react-native-safe-area-context
+=>> npm install @react-navigation/native-stack
+
+
+[3]=====>>>>> Deeplinking (browser to app)
+=>> https://www.youtube.com/watch?v=8fHyN-tDDCI
+=>>
+=>>What You'll Learn:
+    1. Introduction to Deep Linking: Understand the basics of Android deep linking and its benefits.
+    2. Creating Deep Links: Learn how to set up deep links in your Android app.
+    3. Generating `assets.json`: Detailed instructions on generating the `assets.json` file for your website.
+    4. Uploading to `.well-known` Directory: Steps to upload the `assets.json` file to your website's `.well-known` directory.
+    5. Testing the Connection: Methods to test the deep link connection between your website and Android app.
+    6. Implementing Deep Links in Your App: How to ensure your app opens correctly when a deep link is clicked.

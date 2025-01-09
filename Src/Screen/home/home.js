@@ -1,19 +1,29 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList, StatusBar, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
-import { HEIGHT } from '../../Component/Constant'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import { ListData } from '../../Constent/OBJ'
+import { RFValue } from 'react-native-responsive-fontsize'
 
 
-const Home = () => {
-  // console.log(RFValue(10));
 
+const Home = (props) => {
+
+  const list = ({ item, index }) => {
+    return (
+      <TouchableOpacity
+        onPress={() => { props.navigation.navigate(item.navigation) }}
+        style={{ backgroundColor: 'white', flexDirection: 'row', padding: 10, margin: 5, borderRadius: 10, alignItems: 'center' }}>
+        <Text style={{ fontSize: RFValue(16), marginRight: 10, fontWeight: 'bold' }}>{`${index + 1}]`}</Text>
+        <Text style={{ fontSize: RFValue(15), fontWeight: '500' }}>{item.name}</Text>
+      </TouchableOpacity>
+    )
+  }
   return (
-    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-      <Text style={{ textAlign: 'centers', }}>Home</Text >
-      {/* <Text style={{ textAlign: 'centers', fontSize: RFValue(15, HEIGHT) }}>Home</Text > */}
-      {/* <Text style={{ textAlign: 'centers', fontSize: RFPercentage(10) }}>Home</Text > */}
-      {/* <Text style={{ textAlign: 'centers', fontSize: hp('5%') }}>H ome</Text > */}
+    <View style={{ flex: 1, padding: 10, backgroundColor: 'black' }}>
+      <StatusBar backgroundColor={'black'} />
+
+      <Text style={{ fontSize: RFValue(20), color: 'white', margin: 20, textAlign: 'center', fontWeight: 'bold' }}>All Concept</Text>
+      <FlatList data={ListData} renderItem={list} />
+
     </View>
   )
 }
@@ -21,5 +31,3 @@ const Home = () => {
 export default Home
 
 
-// RFValue(24, 580)
-// RFPercentage(5)
