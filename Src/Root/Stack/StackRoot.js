@@ -6,11 +6,10 @@ import Login from '../../Screen/login/login'
 import ExtraData from '../../Screen/FlatList/ExtraData'
 import { RootName } from '../../Constent/OBJ'
 import Product from '../../Screen/Products/Product'
-
-
-// https://website4you.co.in/product/1.png
+import AutoFillOtp from '../../Screen/AutoFillOtp/AutoFillOtp'
 
 const Stack = createNativeStackNavigator()
+
 const linking = {
   prefixes: ['https://website4you.co.in/app'],
   config: {
@@ -20,7 +19,6 @@ const linking = {
     },
   },
 };
-
 
 console.log(linking);
 
@@ -33,6 +31,7 @@ const StackRoot = () => {
         <Stack.Screen name={RootName.login} component={Login} />
         <Stack.Screen name={RootName.extradata} component={ExtraData} />
         <Stack.Screen name={RootName.product} component={Product} />
+        <Stack.Screen name={RootName.autofillOtp} component={AutoFillOtp} />
 
       </Stack.Navigator>
     </NavigationContainer>
