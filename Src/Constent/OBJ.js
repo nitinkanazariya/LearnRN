@@ -3,6 +3,7 @@ export const RootName = {
   login: 'login',
   extradata: 'extradata',
   product: 'product',
+  autofillOtp: 'autofillotp',
 
 }
 
@@ -11,4 +12,5 @@ export const ListData = [
   { id: 2, name: 'Login', navigation: RootName.login },
   { id: 3, name: 'FlatList ExtraData', navigation: RootName.extradata },
   { id: 4, name: 'DeepLinking', navigation: RootName.product },
+  { id: 5, name: 'Auto Fill Otp', navigation: RootName.autofillOtp },
 ]
