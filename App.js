@@ -4,13 +4,14 @@ import Config from 'react-native-config'
 import StackRoot from './Src/Root/Stack/StackRoot'
 
 const App = () => {
-  console.log('env============================================>>>', Config.API_URL)
+  // console.log('env============================================>>>', Config.API_URL)
 
   return (
-
-    <StackRoot />
-
+    <>
+      <StackRoot />
+    </>
   )
 }
 
 export default App
+
