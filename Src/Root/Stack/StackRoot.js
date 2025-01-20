@@ -7,6 +7,7 @@ import ExtraData from '../../Screen/FlatList/ExtraData'
 import { RootName } from '../../Constent/OBJ'
 import Product from '../../Screen/Products/Product'
 import AutoFillOtp from '../../Screen/AutoFillOtp/AutoFillOtp'
+import Tost from '../../Screen/TostMsg/TostMessage'
 
 const Stack = createNativeStackNavigator()
 
@@ -32,6 +33,7 @@ const StackRoot = () => {
         <Stack.Screen name={RootName.extradata} component={ExtraData} />
         <Stack.Screen name={RootName.product} component={Product} />
         <Stack.Screen name={RootName.autofillOtp} component={AutoFillOtp} />
+        <Stack.Screen name={RootName.tost} component={Tost} />
 
       </Stack.Navigator>
     </NavigationContainer>
