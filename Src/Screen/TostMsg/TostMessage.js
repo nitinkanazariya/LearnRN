@@ -19,13 +19,13 @@ const Tost = () => {
     <View style={{
       flexDirection: 'row',
       backgroundColor: '#f44336', // Red background for error toast
-      padding: 16,
+      padding: 10,
       alignItems: 'center',
       width:WIDTH
     }}>
       <Text style={{
         color: '#fff',
-        fontSize: 18,
+        fontSize: 15,
         fontWeight: 'bold',
       }}>
         {text1}
@@ -55,7 +55,6 @@ const Tost = () => {
       <Button title="Show Custom Toast" onPress={showToast} />
       {/* Define custom toast rendering */}
       <Toast
-        ref={(ref) => Toast.setRef(ref)}
         config={{
           customToast: (props) => <CustomToast {...props} />
         }}
