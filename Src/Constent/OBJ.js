@@ -5,6 +5,9 @@ export const RootName = {
   product: 'product',
   autofillOtp: 'autofillotp',
   tost: 'tost',
+  skeleton: 'skeleton',
+  sectionlist: 'sectionlist',
+  socketio: 'socketio',
 
 }
 
@@ -14,5 +17,7 @@ export const ListData = [
   { id: 3, name: 'FlatList ExtraData', navigation: RootName.extradata },
   { id: 4, name: 'DeepLinking', navigation: RootName.product },
   { id: 5, name: 'Auto Fill Otp', navigation: RootName.autofillOtp },
-  { id: 6, name: 'Tost Message', navigation: RootName.tost },
+  { id: 6, name: 'Skeleton loader', navigation: RootName.skeleton },
+  { id: 7, name: 'Sectionlist Ex. ', navigation: RootName.sectionlist },
+  { id: 8, name: 'Chat With Socket', navigation: RootName.socketio },
 ]
