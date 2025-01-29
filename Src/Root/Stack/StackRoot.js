@@ -8,6 +8,11 @@ import { RootName } from '../../Constent/OBJ'
 import Product from '../../Screen/Products/Product'
 import AutoFillOtp from '../../Screen/AutoFillOtp/AutoFillOtp'
 import Tost from '../../Screen/TostMsg/TostMessage'
+import SkeletonScreen from '../../Screen/Skeleton/Skeleton'
+import SectionListScreen from '../../Screen/SectionList/SectionListScreen'
+import ChatScreen from '../../Screen/SocketIo/ChatScreen'
+import SignUp from '../../Screen/SignUp/SignUp'
+import ChatUserList from '../../Screen/ChatUserList/ChatUserList'
 
 const Stack = createNativeStackNavigator()
 
@@ -15,8 +20,8 @@ const linking = {
   prefixes: ['https://website4you.co.in/app'],
   config: {
     screens: {
-      product: 'product/:productId', 
-      login: 'login', 
+      product: 'product/:productId',
+      login: 'login',
     },
   },
 };
@@ -29,11 +34,27 @@ const StackRoot = () => {
       <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
 
         <Stack.Screen name={RootName.home} component={Home} />
-        <Stack.Screen name={RootName.login} component={Login} />
         <Stack.Screen name={RootName.extradata} component={ExtraData} />
         <Stack.Screen name={RootName.product} component={Product} />
         <Stack.Screen name={RootName.autofillOtp} component={AutoFillOtp} />
         <Stack.Screen name={RootName.tost} component={Tost} />
+        <Stack.Screen name={RootName.skeleton} component={SkeletonScreen} />
+        <Stack.Screen name={RootName.sectionlist} component={SectionListScreen} />
+
+
+        {/* //socket.io */}
+        <Stack.Screen name={RootName.login} component={Login} />
+        <Stack.Screen name={RootName.signUp} component={SignUp} />
+        <Stack.Screen name={RootName.chatuserlist} component={ChatUserList} />
+        <Stack.Screen name={RootName.socketio} component={ChatScreen} />
+
+
+
+
+        {/* tecsensePrecticalFirst */}
+        {/* <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="AddTask" component={AddTaskScreen} /> */}
+
 
       </Stack.Navigator>
     </NavigationContainer>
