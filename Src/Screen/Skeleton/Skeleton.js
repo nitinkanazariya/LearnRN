@@ -11,7 +11,7 @@ const SkeletonScreen = () => {
   useEffect(() => {
     fetchUsers()
   }, [])
-  
+
   const fetchUsers = async () => {
     setLoading(true)
     const url = 'https://allin.website4you.co.in/api/v1/user-list'
