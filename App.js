@@ -5,7 +5,7 @@ import StackRoot from './Src/Root/Stack/StackRoot'
 LogBox.ignoreAllLogs()
 const App = () => {
 
-console.log(Config.API_URL);
+  console.log(Config.API_URL);
 
   return (
     <>

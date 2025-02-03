@@ -13,6 +13,7 @@ import SectionListScreen from '../../Screen/SectionList/SectionListScreen'
 import ChatScreen from '../../Screen/SocketIo/ChatScreen'
 import SignUp from '../../Screen/SignUp/SignUp'
 import ChatUserList from '../../Screen/ChatUserList/ChatUserList'
+import ThreeD from '../../Screen/3d/ThreeD'
 
 const Stack = createNativeStackNavigator()
 
@@ -48,6 +49,7 @@ const StackRoot = () => {
         <Stack.Screen name={RootName.chatuserlist} component={ChatUserList} />
         <Stack.Screen name={RootName.socketio} component={ChatScreen} />
 
+        <Stack.Screen name={RootName.threeD} component={ThreeD} />
 
 
 

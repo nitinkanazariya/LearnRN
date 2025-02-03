@@ -2,26 +2,25 @@ import { View, Text, FlatList, TextInput, TouchableOpacity, StatusBar, Alert } f
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { WIDTH } from '../../Component/Constant';
 import { RootName } from '../../Constent/OBJ';
 
 const SOCKET_URL = 'http://10.0.2.2:3000';
 const socket = io(SOCKET_URL);
 
 const ChatScreen = (props) => {
-  const userid = props?.route?.params?.userId?.id
+  const userid = props?.route?.params?.userId?.id;
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
   const [myId, setMyId] = useState(1);
 
   const getMYId = async () => {
-    const a = await AsyncStorage.getItem('myid')
-    setMyId(JSON.parse(a))
-  }
+    const a = await AsyncStorage.getItem('myid');
+    setMyId(JSON.parse(a));
+  };
 
   useEffect(() => {
-    getMYId()
-  }, [])
+    getMYId();
+  }, []);
 
 
   useEffect(() => {
@@ -67,13 +66,14 @@ const ChatScreen = (props) => {
     Alert.alert('logOut')
     props.navigation.navigate(RootName.home)
 
-  }
-const getMessages=()=>{
-  
-}
+  };
+  const getMessages = () => {
+
+  };
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white', }}>
+    // eslint-disable-next-line react-native/no-inline-styles
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
 
       <StatusBar backgroundColor={'black'} />
       <View style={{ padding: 20, backgroundColor: 'black', alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' }}>

@@ -34,3 +34,8 @@ package-lock.json
 
 # Metro bundler
 .metro/
+
+# Expo
+.expo
+dist/
+web-build/
