@@ -27,3 +27,107 @@
 
 
  [4]=====>>>>>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 1] nitin@tec-sense.com
+==> -{Y2sQAqgkezF)G*h^
+==> f+Etx+!vW-xF5~v&ER
+
+2] nitin@tec-sense.com
+==> baba@123
+
+3] ankit@tec-sense.com
+
+4] dhruv@tec-sense.com
+
+5] walkermark111989@gmail.com
+==> Tecsense@Ankit@414
+
+6] allinchat.app@gmail.com
+==> Chat321#
+
+7] emil.kanz@icloud.com
+==>Mrapp57$(new)
+==>Zxcvbnm54321#(old)
+
+8] Tabnine ai
+
+9] dating App UI
+==>https://www.figma.com/design/IlFYLmC80TXGv5McbEiNAc/DatingU?node-id=1-2&node-type=CANVAS&t=VKV3Ps2kUWpPNG5s-0
+
+10]Allin figma
+==>https://www.figma.com/design/sRIM8YzBCkJJt42hHCLMYy/Alll-in?node-id=1186-742&node-type=CANVAS&t=a6zzue4ljuRG8pzB-0
+
+
+11] chatgpt 
+ ==>>nitin@tec-sense.com
+==>>baba@baba@baba
+
+12] Host	Trello.com
+Email :-developer3.tecsense@gmail.com
+Password:-
+Tecsense@1234!
+
+13]Lotto
+https://testweb4you.com/html/lotto/normal-lottery
+https://testweb4you.com/html/loto/
+
+14]swager api
+https://allin.website4you.co.in/api/documentation#/
+
+15] Rn Instalation
+npx @react-native-community/cli init projectname
+
+
+
+
+
+
+
+
+
+
+
+
+
+
