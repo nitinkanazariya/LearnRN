@@ -9,7 +9,8 @@ export const RootName = {
   skeleton: 'skeleton',
   sectionlist: 'sectionlist',
   socketio: 'socketio',
-  chatuserlist: 'chatuserlist'
+  chatuserlist: 'chatuserlist',
+  threeD: '3d',
 
 }
 
@@ -21,4 +22,5 @@ export const ListData = [
   { id: 5, name: 'Skeleton loader', navigation: RootName.skeleton },
   { id: 6, name: 'Sectionlist Ex. ', navigation: RootName.sectionlist },
   { id: 7, name: 'Chat With Socket', navigation: RootName.login },
+  { id: 8, name: '3d Modal', navigation: RootName.threeD },
 ]

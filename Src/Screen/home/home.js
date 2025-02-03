@@ -23,7 +23,12 @@ const Home = (props) => {
 
       <Text style={{ fontSize: RFValue(20), color: 'white', margin: 20, textAlign: 'center', fontWeight: 'bold' }}>All Concept</Text>
       <FlatList data={ListData} renderItem={list} />
+      {/* 
+  <TouchableOpacity hitSlop={15} style={{ backgroundColor: 'red', height: 25, width: 25, marginBottom: 50, alignItems: 'center', justifyContent: 'center' }}>
+        <Text style={{ fontSize: 15, color: 'white', fontWeight: 'bold', }}>X</Text>
+      </TouchableOpacity>
 
+*/}
     </View>
   )
 }
