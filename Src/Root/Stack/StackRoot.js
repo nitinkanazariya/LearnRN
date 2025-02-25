@@ -14,6 +14,8 @@ import ChatScreen from '../../Screen/SocketIo/ChatScreen'
 import SignUp from '../../Screen/SignUp/SignUp'
 import ChatUserList from '../../Screen/ChatUserList/ChatUserList'
 import ThreeD from '../../Screen/3d/ThreeD'
+import ContextApi from '../../Screen/ContextApi/ContextApi'
+import CustomHook from '../../Screen/CustomHook/CustomHook'
 
 const Stack = createNativeStackNavigator()
 
@@ -29,6 +31,7 @@ const linking = {
 
 console.log(linking);
 
+
 const StackRoot = () => {
   return (
     <NavigationContainer linking={linking} >
@@ -42,7 +45,6 @@ const StackRoot = () => {
         <Stack.Screen name={RootName.skeleton} component={SkeletonScreen} />
         <Stack.Screen name={RootName.sectionlist} component={SectionListScreen} />
 
-
         {/* //socket.io */}
         <Stack.Screen name={RootName.login} component={Login} />
         <Stack.Screen name={RootName.signUp} component={SignUp} />
@@ -50,6 +52,9 @@ const StackRoot = () => {
         <Stack.Screen name={RootName.socketio} component={ChatScreen} />
 
         <Stack.Screen name={RootName.threeD} component={ThreeD} />
+        <Stack.Screen name={RootName.context} component={ContextApi} />
+        <Stack.Screen name={RootName.customhook} component={CustomHook} />
+        {/* <Stack.Screen name={RootName.customhook} component={CustomHook} /> */}
 
 
 
