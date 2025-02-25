@@ -2,12 +2,18 @@
 
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import LoaderKit from 'react-native-loader-kit'
 
 // Custom Button Component
-const CustomButton = ({ onPress, title, style, textStyle }) => {
+const CustomButton = ({ onPress, title, style, textStyle, loading }) => {
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress}>
-      <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+    <TouchableOpacity disabled={loading} style={[styles.button, style]} onPress={onPress}>
+      {loading ? null : <Text style={[styles.buttonText, textStyle]}>{title}</Text>}
+      {loading && <LoaderKit
+        style={{ width: 25, height: 25, }}
+        name={'LineScalePulseOutRapid'}
+        color={'white'}
+      />}
     </TouchableOpacity>
   );
 };
@@ -21,6 +27,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+    height: 50
   },
   buttonText: {
     color: '#fff',
