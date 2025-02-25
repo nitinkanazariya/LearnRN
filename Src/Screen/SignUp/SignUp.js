@@ -3,7 +3,7 @@ import { View, TextInput, Text, Button, StyleSheet, Alert } from 'react-native';
 import { RootName } from '../../Constent/OBJ';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../Component/Button';
-
+import Config from 'react-native-config'
 const SignUp = (props) => {
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
@@ -20,7 +20,9 @@ const SignUp = (props) => {
   };
 
   const handleSubmit = async () => {
-    const res = await fetch('http://192.168.1.33:3000/api/register', {
+    Alert.alert(Config.API_URL)
+
+    const res = await fetch(`${Config.API_URL}/api/register`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -31,6 +33,7 @@ const SignUp = (props) => {
         password: formData.password,
       })
     })
+
     const response = await res.json()
 
     if (response.status_code == 200) {
