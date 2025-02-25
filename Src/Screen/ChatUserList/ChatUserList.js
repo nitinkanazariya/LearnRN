@@ -2,6 +2,7 @@ import { View, Text, StatusBar, TouchableOpacity, Alert, FlatList } from 'react-
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { RootName } from '../../Constent/OBJ'
+import Config from 'react-native-config'
 
 const ChatUserList = (props) => {
   const [Token, setToken] = useState('')
@@ -16,7 +17,7 @@ const ChatUserList = (props) => {
   }
   const GetAllUser = async () => {
     if (Token) {
-      const res = await fetch('http://192.168.1.33:3000/api/user', {
+      const res = await fetch(`${Config.API_URL}/api/user`, {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +50,7 @@ const ChatUserList = (props) => {
         </TouchableOpacity>
       </View>
       <FlatList style={{ padding: 10 }} data={AllUsers} renderItem={({ item }) => {
-        console.log(item);
+       
 
         return (
           <TouchableOpacity style={{ padding: 10, backgroundColor: 'white', borderRadius: 10, marginBottom: 10, justifyContent: 'space-between' }} onPress={() => {
