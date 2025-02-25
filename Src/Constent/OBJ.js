@@ -11,6 +11,8 @@ export const RootName = {
   socketio: 'socketio',
   chatuserlist: 'chatuserlist',
   threeD: '3d',
+  context: 'context',
+  customhook:'customhook'
 
 }
 
@@ -23,4 +25,6 @@ export const ListData = [
   { id: 6, name: 'Sectionlist Ex. ', navigation: RootName.sectionlist },
   { id: 7, name: 'Chat With Socket', navigation: RootName.login },
   { id: 8, name: '3d Modal', navigation: RootName.threeD },
+  { id: 9, name: 'Context Api', navigation: RootName.context },
+  { id: 10, name: 'Custom-hook', navigation: RootName.customhook },
 ]
