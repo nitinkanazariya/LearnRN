@@ -59,7 +59,9 @@ const DATA = [
   },
 ];
 
-const App = () => {
+const App = (props) => {
+  console.log(props);
+
   return (
     <SectionList
       sections={DATA}
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
   teamName: {
     fontSize: 18,
     fontWeight: 'bold',
-     paddingVertical: 5
+    paddingVertical: 5
   },
   memberContainer: {
     paddingVertical: 5,
@@ -175,3 +177,63 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+
+
+
+
+// import { View, Text, SectionList, TouchableOpacity } from 'react-native'
+// import React from 'react'
+
+// const App = () => {
+//   const DATA = [
+//     {
+//       name: 'Main dishes',
+//       data: ['a', 'b', 'c'],
+//       abc: ['1', '2', '4'],
+//     },
+//     {
+//       name: 'Sides',
+//       data: ['d', 'e', 'f'],
+//       abc: ['4 ', '5 ', ' 6'],
+//     },
+//     {
+//       name: 'Drinks',
+//       data: ['g', 'h', 'i'],
+//       abc: ['7', '8', '9'],
+//     },
+//     {
+//       name: 'Desserts',
+//       data: ['j', 'k'],
+//       abc: [' 10', ' 11'],
+//     },
+//   ];
+
+
+//   return (
+//     <View style={{ flex: 1, padding: 20 }}>
+//       <SectionList
+//         sections={DATA}
+//         keyExtractor={(item, index) => item + index}
+//         renderItem={({ item }) => <Text >{item}</Text>}
+//         // renderSectionHeader={({ section }) => (
+//         //   <View>
+//         //     <Text style={{ fontSize: 50 }}>{section.name}</Text>
+//         //     {/* Displaying the data array */}
+//         //     <Text style={{ fontSize: 30 }} >{'abc=========>>>>>>'}</Text>
+//         //     {section.data.map((item, index) => (
+//         //       <Text key={index} >{item}</Text>
+//         //     ))}
+//         //     {/* Displaying the 'a' array */}
+//         //     <Text style={{ fontSize: 30 }} >{'123=========>>>>>>>'}</Text>
+//         //     {section.abc.map((item, index) => (
+//         //       <Text key={index}>{item}</Text>
+//         //     ))}
+//         //   </View>
+//         // )}
+//       />
+//     </View>
+//   )
+// }
+
+// export default App
