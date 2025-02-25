@@ -3,6 +3,7 @@ import { View, TextInput, Text, Button, StyleSheet, Alert } from 'react-native';
 import { RootName } from '../../Constent/OBJ';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../../Component/Button';
+import Config from 'react-native-config'
 
 const Login = (props) => {
 
@@ -35,7 +36,7 @@ const Login = (props) => {
 
   const handleSubmit = async () => {
 
-    const res = await fetch('http://192.168.1.33:3000/api/login', {
+    const res = await fetch(`${Config.API_URL}/api/login`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
