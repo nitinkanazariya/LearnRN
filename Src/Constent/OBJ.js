@@ -12,7 +12,9 @@ export const RootName = {
   chatuserlist: 'chatuserlist',
   threeD: '3d',
   context: 'context',
-  customhook:'customhook'
+  customhook: 'customhook',
+  Download: 'filedownload',
+  Exceldata: 'pickexcel'
 
 }
 
@@ -27,4 +29,6 @@ export const ListData = [
   { id: 8, name: '3d Modal', navigation: RootName.threeD },
   { id: 9, name: 'Context Api', navigation: RootName.context },
   { id: 10, name: 'Custom-hook', navigation: RootName.customhook },
+  { id: 11, name: 'Download_File', navigation: RootName.Download },
+  { id: 12, name: 'LocalExcel', navigation: RootName.Exceldata },
 ]

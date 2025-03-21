@@ -10,28 +10,31 @@ const CustomTextInput = ({
   RightIcon,
   Value,
   onChangeText,
-  keyboardType }) => {
+  keyboardType, ErrorMsg }) => {
 
   return (
-    <View
-      style={[{ backgroundColor: backgroundColor ? backgroundColor : 'white' }, styles.Container, ContainerStyle]}>
-      {LeftIcon && <Image
-        source={{ uri: LeftIcon ? LeftIcon : 'https://cdn4.iconfinder.com/data/icons/social-productivity-line-art-4/128/security-shield-lock-512.png' }}
-        style={[styles.icon, IconStyle]}
-      />}
-      <TextInput
-        placeholder={placeholder ? placeholder : 'Enter Text'}
-        value={Value}
-        autoCapitalize="sentences"
-        keyboardType={keyboardType ? keyboardType : "default"}
-        onChangeText={onChangeText}
-        style={styles.input}
-      />
-      {RightIcon && <Image
-        source={{ uri: RightIcon ? RightIcon : 'https://cdn4.iconfinder.com/data/icons/social-productivity-line-art-4/128/security-shield-lock-512.png' }}
-        style={[styles.icon, IconStyle]}
-      />}
-    </View>
+    <>
+      <View
+        style={[{ backgroundColor: backgroundColor ? backgroundColor : 'white' }, styles.Container, ContainerStyle]}>
+        {LeftIcon && <Image
+          source={{ uri: LeftIcon ? LeftIcon : 'https://cdn4.iconfinder.com/data/icons/social-productivity-line-art-4/128/security-shield-lock-512.png' }}
+          style={[styles.icon, IconStyle]}
+        />}
+        <TextInput
+          placeholder={placeholder ? placeholder : 'Enter Text'}
+          value={Value}
+          autoCapitalize="sentences"
+          keyboardType={keyboardType ? keyboardType : "default"}
+          onChangeText={onChangeText}
+          style={styles.input}
+        />
+        {RightIcon && <Image
+          source={{ uri: RightIcon ? RightIcon : 'https://cdn4.iconfinder.com/data/icons/social-productivity-line-art-4/128/security-shield-lock-512.png' }}
+          style={[styles.icon, IconStyle]}
+        />}
+      </View>
+      {ErrorMsg && <Text style={{ color: 'red', marginLeft: 5, fontSize: 14 }}>{ErrorMsg}</Text>}
+    </>
   )
 }
 

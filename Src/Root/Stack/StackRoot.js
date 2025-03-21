@@ -16,6 +16,8 @@ import ChatUserList from '../../Screen/ChatUserList/ChatUserList'
 import ThreeD from '../../Screen/3d/ThreeD'
 import ContextApi from '../../Screen/ContextApi/ContextApi'
 import CustomHook from '../../Screen/CustomHook/CustomHook'
+import FileDownloadExample from '../../Screen/Download/DownloadFile'
+import LocalExcelData from '../../Screen/pickexcel/phoneExcelDataPrint'
 
 const Stack = createNativeStackNavigator()
 
@@ -48,12 +50,18 @@ const StackRoot = () => {
         {/* //socket.io */}
         <Stack.Screen name={RootName.login} component={Login} />
         <Stack.Screen name={RootName.signUp} component={SignUp} />
+
+
+
+
         <Stack.Screen name={RootName.chatuserlist} component={ChatUserList} />
         <Stack.Screen name={RootName.socketio} component={ChatScreen} />
 
         <Stack.Screen name={RootName.threeD} component={ThreeD} />
         <Stack.Screen name={RootName.context} component={ContextApi} />
         <Stack.Screen name={RootName.customhook} component={CustomHook} />
+        <Stack.Screen name={RootName.Download} component={FileDownloadExample} />
+        <Stack.Screen name={RootName.Exceldata} component={LocalExcelData} />
         {/* <Stack.Screen name={RootName.customhook} component={CustomHook} /> */}
 
 
