@@ -119,19 +119,28 @@ const PdfBill = () => {
   <div class="container">
 
     <div class="section" style="margin-left: 30px ">
-      <div style="display: flex; flex-direction: row; justify-content:space-between; padding-left: 10px;
+    <div style="background:rgb(146, 35, 35); height: 150;">
+
+      </div>
+      <p
+        style="font-size: 12px; font-weight: 900; letter-spacing: 1px; background: #faf884;text-align: center;margin-top: 0;padding:2px;">
+        ૨૦૩,
+        શાશ્વત મોલ, શુભ
+        કોમ્પ્લેક્સ ની બાજુ માં,
+        બોટાદ-૩૬૪૭૧૦</p>
+        <div style="display: flex; flex-direction: row; justify-content:space-between; padding-left: 10px;margin-top: -15px;;
        padding-right: 10px;">
         <div style="flex-direction: row; display: flex;width: 100%;">
           <p style="font-weight: bold; font-size: 12px;  color: rgb(146, 28, 28);">નામ</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 85%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            nitin</p>
+    ${userDetails.name}</p>
         </div>
         <div style="display: flex; flex-direction: row; width: 50%;">
           <p style="font-weight: bold; font-size: 12px;  color:rgb(146, 28, 28);">બિલ નં.</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 67%;margin-left: 5px; padding-left: 10px ;  font-size: 12px; font-weight: bold;">
-            1K215</p>
+    ${userDetails.billNo}</p>
         </div>
       </div>
 
@@ -142,13 +151,13 @@ const PdfBill = () => {
           <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">અડ્રેસ</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 85%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            meghaninager-1 turkhaturkhaturkhaturkha roa d shree nath</p>
+    ${userDetails.addresh}</p>
         </div>
-        <div style="display: flex; flex-direction: row; width: 50%;">
+        <div style="display: flex; flex-direction: row; width: 60%;">
           <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">બુકિંગ તા.</p>
           <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 62%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            20/03/2025</p>
+            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 65%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
+    ${formatDateTime(userDetails.bookingDate)}</p>
         </div>
       </div>
 
@@ -159,13 +168,13 @@ const PdfBill = () => {
           <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">મો.</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 100%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            9589355825</p>
+    ${userDetails.phone1}</p>
         </div>
         <div style="display: flex; flex-direction: row; width: 100%;">
           <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">મો.</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 88%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            9158485965</p>
+    ${userDetails.phone2}</p>
         </div>
       </div>
       <div style="border-bottom: 1px solid; margin-left: -20px; margin-right: -20; border-color: rgb(146, 35, 35);">
@@ -176,13 +185,13 @@ const PdfBill = () => {
           <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">લઈ જવાની તા:-</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 57%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            20/10/2025</p>
+    ${formatDateTime(userDetails.laiJavaNiDate)}</p>
         </div>
         <div style="display: flex; flex-direction: row; width: 100%;">
           <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">ટોટલ ભાડુ:-</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            2500/-</p>
+    ${userDetails.TotalBhadu}</p>
         </div>
       </div>
       <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
@@ -191,13 +200,13 @@ const PdfBill = () => {
           <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">ભાડુ તા:-</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            20/10/2025</p>
+    ${formatDateTime(userDetails.bhaduDate)}</p>
         </div>
         <div style="display: flex; flex-direction: row; width: 100%;">
           <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">એડવાન્સ:-</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 72%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            2500/-</p>
+    ${userDetails.advance}</p>
         </div>
       </div>
       <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
@@ -206,20 +215,18 @@ const PdfBill = () => {
           <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">પાછી આપવાની તા:-</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 50%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            20/10/2025</p>
+    ${formatDateTime(userDetails.pachiAapvaniDate)}</p>
         </div>
         <div style="display: flex; flex-direction: row; width: 100%;">
           <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">બાકી ભાડુ:-</p>
           <p
             style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            2500/-</p>
+    ${userDetails.bakiBhadu}</p>
         </div>
 
       </div>
-      <!-- <div style="border-bottom: 1px solid; margin-left: -20px; margin-right: -20; border-color: rgb(146, 35, 35);">
-      </div> -->
-
-      <table class="items-table">
+     
+      <table class="items-table" style="margin-top: 0px; ">
         <thead>
           <tr>
             <th style="width: 5%; text-align: center; border-left: 0; ">ક્રમ</th>
@@ -231,19 +238,32 @@ const PdfBill = () => {
         </thead>
         <tbody>
          ${items.map((item, index) => {
-        return (
-          `  <tr>
-          <td style="text-align: center;border-left: 0;">${index + 1}</td>
-          <td>${item.name}</td>
-          <td style=" text-align: center; ">5</td>
-          <td style=" text-align: center; ">${item.price}</td>
-          <td style="text-align: center;border-right: 0;">${item.price * 10}</td>
-        </tr>`
-        )
-      })}
+        return `
+            <tr>
+              <td style="text-align: center; border-left: 0;">${index + 1}</td>
+              <td>${item.name}</td>
+              <td style="text-align: center;">5</td>
+              <td style="text-align: center;">${item.price}</td>
+              <td style="text-align: center; border-right: 0;">${item.price * 10}</td>
+            </tr>
+          `;
+      }).join('')}
 
         </tbody>
       </table>
+        <p
+        style="font-weight: bold;font-size: 8px; background: rgb(146, 35, 35); margin-top: 0;text-align: center; color: white;padding: 2px;letter-spacing: 1;">
+        (૧)ડિપોઝિટ ભાડુ ડિલિવરી
+        લેવા આવો ત્યારે
+        ફરજીયાત લાવવુ <span style="margin-left: 5px;"> </span>(ર)કારણ ગમે તે
+        હોય એડવાન્સ રીટર્ન મળશે નહી. </p>
+      <p style="font-size: 11px; font-weight: bold;color:rgb(146, 35, 35);padding-left: 10px;line-height: 20px;">
+        (૧) <span style="margin-left: 3px;"></span>બુકિંગ કરાવેલ ટ્રે કૅન્સલ કે તેમા ફેરફાર થશે નહિ.<br>
+        (ર)<span style="margin-left: 3px;"></span> કોઈ પણ ટ્રે માં ડેમેજ થાય તો તેનો ચાર્જ અલગ થી લેવા મા આવશે.<br>
+        (3)<span style="margin-left: 3px;"></span> ટ્રે ની રીટર્ન તારીખ, સમય થી લેટ આપનાર પાસે ડબલ ભાડુ લેવા મા
+        આવશે.<br>
+
+      </p>
     </div>
 
 
