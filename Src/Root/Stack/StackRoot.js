@@ -18,6 +18,7 @@ import ContextApi from '../../Screen/ContextApi/ContextApi'
 import CustomHook from '../../Screen/CustomHook/CustomHook'
 import FileDownloadExample from '../../Screen/Download/DownloadFile'
 import LocalExcelData from '../../Screen/pickexcel/phoneExcelDataPrint'
+import PdfBill from '../../Screen/Pdf/PdfBill'
 
 const Stack = createNativeStackNavigator()
 
@@ -37,7 +38,9 @@ console.log(linking);
 const StackRoot = () => {
   return (
     <NavigationContainer linking={linking} >
-      <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
+      <Stack.Navigator
+        initialRouteName={RootName.PdfBill}
+        screenOptions={{ headerShown: false, animation: 'fade' }}>
 
         <Stack.Screen name={RootName.home} component={Home} />
         <Stack.Screen name={RootName.extradata} component={ExtraData} />
@@ -62,6 +65,7 @@ const StackRoot = () => {
         <Stack.Screen name={RootName.customhook} component={CustomHook} />
         <Stack.Screen name={RootName.Download} component={FileDownloadExample} />
         <Stack.Screen name={RootName.Exceldata} component={LocalExcelData} />
+        <Stack.Screen name={RootName.PdfBill} component={PdfBill} />
         {/* <Stack.Screen name={RootName.customhook} component={CustomHook} /> */}
 
 

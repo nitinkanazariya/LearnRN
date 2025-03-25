@@ -14,7 +14,8 @@ export const RootName = {
   context: 'context',
   customhook: 'customhook',
   Download: 'filedownload',
-  Exceldata: 'pickexcel'
+  Exceldata: 'pickexcel',
+  PdfBill:'pdfbill'
 
 }
 
@@ -31,4 +32,5 @@ export const ListData = [
   { id: 10, name: 'Custom-hook', navigation: RootName.customhook },
   { id: 11, name: 'Download_File', navigation: RootName.Download },
   { id: 12, name: 'LocalExcel', navigation: RootName.Exceldata },
+  { id: 12, name: 'Genarate Pdf Bill', navigation: RootName.PdfBill },
 ]
