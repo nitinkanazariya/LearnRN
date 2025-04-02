@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.13.1",
+    "@kanelloc/react-native-animated-header-scroll-view": "^1.0.0",
     "@react-native-async-storage/async-storage": "^2.1.0",
     "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-native/gradle-plugin": "^0.77.0",

@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, ScrollView, Alert, Linking, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Button, ScrollView, Alert, Linking, TouchableOpacity, Image, StatusBar } from 'react-native';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share'; // Importing the share functionality
 import CustomButton from '../../Component/Button';
 import DatePicker from 'react-native-date-picker'
-import { formatDateTime } from './ConvertDateAndTime';
+import { ButtonComp, DatePick, formatDateTime, InputTitle, } from './Custom';
+import ItemModal from './ItemModal';
+import { HtmlContent } from './PdfHtmlContant';
+import { useDispatch, useSelector } from 'react-redux';
+import { itemCountDecrease, itemCountIncrease, RemoveToCart } from '../../service/redux/CartSlice';
 
 const PdfBill = () => {
 
@@ -13,415 +17,51 @@ const PdfBill = () => {
   const [laiJavaNiDateOpen, setLaiJavaNiDateOpen] = useState(false)
   const [bhaduApiyaNiDateOpen, setBhaduApiyaNIDateOpen] = useState(false)
   const [pachiApvaNiDateOpen, setPachiApvaNiDateOpen] = useState(false)
+  const [visible, setVisible] = useState(false)
   const [userDetails, setUserDetails] = useState({
     name: '',
-    billNo: 11,
+    billNo: 'T021585',
     addresh: '',
     bookingDate: new Date(),
     phone1: '',
     phone2: '',
     laiJavaNiDate: new Date(),
-    TotalBhadu: '',
+    TotalBhadu: 0,
     bhaduDate: new Date(),
     advance: '',
     pachiAapvaniDate: new Date(),
-    bakiBhadu: '',
+    bakiBhadu: 0,
   });
-  const [items, setItems] = useState(
-    new Array(13).fill({ name: '', price: '' })
-  );
 
-  const handleItemChange = (index, field, value) => {
-    const updatedItems = [...items];
-    updatedItems[index] = { ...updatedItems[index], [field]: value };
-    setItems(updatedItems);
-  };
-  const addItem = () => {
-    const updatedItems = [...items];
-    updatedItems.push({ name: '', price: '' });
-    setItems(updatedItems);
-  };
-  const removeItem = (index) => {
-    const updatedItems = items.filter((_, i) => i !== index); // Removes the item at the given index
-    setItems(updatedItems);
-  };
+  const dispatch = useDispatch()
+  const data = useSelector((state) => {
+    return state.cart.cart;
+  })
+  const total = data?.reduce((a, b) => a + Number(b.price * b.itemCount), 0);
+  const baki = total - userDetails.advance;
+  useEffect(() => {
+    setUserDetails(prevState => ({
+      ...prevState,
+      TotalBhadu: total,
+      bakiBhadu: Number(baki)
+    }));
+  }, [total, userDetails.TotalBhadu, userDetails.advance, userDetails.bakiBhadu])
   const generatePDF = async () => {
+
     try {
-      const htmlContent = `
-     <html>
-
-<head>
-  <style>
-    @page {
-      size: A4 landscape;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .container {
-      display: flex;
-      width: 100%;
-      height: 100%;
-    }
-
-    .section {
-      border: 2px solid rgb(146, 35, 35);
-      width: 46%;
-      box-sizing: border-box;
-      height: auto;
-      overflow: hidden;
-      page-break-inside: avoid;
-    }
-
-    .items-table {
-      width: 100%;
-      border-collapse: collapse;
-      table-layout: fixed;
-    }
-
-    .items-table th,
-    .items-table td {
-      border: 1px solid rgb(146, 35, 35);
-      padding: 5px;
-      text-align: left;
-      word-wrap: break-word;
-      margin-left: -10px;
-    }
-
-    .items-table th {
-      background-color: #f2f2f2;
-    }
-
-
-
-    .container {
-      height: 100%
-    }
-
-    .section .items-table {
-      font-size: 12px;
-    }
-
-    .items-table th,
-    .items-table td {
-      font-size: 12px;
-    }
-  </style>
-</head>
-
-<body>
-  <div class="container">
-
-    <div class="section" style="margin-left: 30px ">
-    <div style="background:rgb(146, 35, 35); height: 150;">
-
-      </div>
-      <p
-        style="font-size: 12px; font-weight: 900; letter-spacing: 1px; background: #faf884;text-align: center;margin-top: 0;padding:2px;">
-        ૨૦૩,
-        શાશ્વત મોલ, શુભ
-        કોમ્પ્લેક્સ ની બાજુ માં,
-        બોટાદ-૩૬૪૭૧૦</p>
-        <div style="display: flex; flex-direction: row; justify-content:space-between; padding-left: 10px;margin-top: -15px;;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px;  color: rgb(146, 28, 28);">નામ</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 85%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-    ${userDetails.name}</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 50%;">
-          <p style="font-weight: bold; font-size: 12px;  color:rgb(146, 28, 28);">બિલ નં.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 67%;margin-left: 5px; padding-left: 10px ;  font-size: 12px; font-weight: bold;">
-    ${userDetails.billNo}</p>
-        </div>
-      </div>
-
-
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">અડ્રેસ</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 85%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-    ${userDetails.addresh}</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 60%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">બુકિંગ તા.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 65%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-    ${formatDateTime(userDetails.bookingDate)}</p>
-        </div>
-      </div>
-
-
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">મો.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 100%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-    ${userDetails.phone1}</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">મો.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 88%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-    ${userDetails.phone2}</p>
-        </div>
-      </div>
-      <div style="border-bottom: 1px solid; margin-left: -20px; margin-right: -20; border-color: rgb(146, 35, 35);">
-      </div>
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -5px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">લઈ જવાની તા:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 57%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-    ${formatDateTime(userDetails.laiJavaNiDate)}</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">ટોટલ ભાડુ:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-    ${userDetails.TotalBhadu}</p>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">ભાડુ તા:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-    ${formatDateTime(userDetails.bhaduDate)}</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">એડવાન્સ:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 72%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-    ${userDetails.advance}</p>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">પાછી આપવાની તા:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 50%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-    ${formatDateTime(userDetails.pachiAapvaniDate)}</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">બાકી ભાડુ:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-    ${userDetails.bakiBhadu}</p>
-        </div>
-
-      </div>
-     
-      <table class="items-table" style="margin-top: 0px; ">
-        <thead>
-          <tr>
-            <th style="width: 5%; text-align: center; border-left: 0; ">ક્રમ</th>
-            <th style=" text-align: center; ">વિગત</th>
-            <th style="width: 5%; text-align: center; ">નંગ</th>
-            <th style="width: 10%; text-align: center; ">ભાવ</th>
-            <th style="width: 10%; text-align: center;border-right: 0; ">રકમ</th>
-          </tr>
-        </thead>
-        <tbody>
-         ${items.map((item, index) => {
-        return `
-            <tr>
-              <td style="text-align: center; border-left: 0;">${index + 1}</td>
-              <td>${item.name}</td>
-              <td style="text-align: center;">5</td>
-              <td style="text-align: center;">${item.price}</td>
-              <td style="text-align: center; border-right: 0;">${item.price * 10}</td>
-            </tr>
-          `;
-      }).join('')}
-
-        </tbody>
-      </table>
-        <p
-        style="font-weight: bold;font-size: 8px; background: rgb(146, 35, 35); margin-top: 0;text-align: center; color: white;padding: 2px;letter-spacing: 1;">
-        (૧)ડિપોઝિટ ભાડુ ડિલિવરી
-        લેવા આવો ત્યારે
-        ફરજીયાત લાવવુ <span style="margin-left: 5px;"> </span>(ર)કારણ ગમે તે
-        હોય એડવાન્સ રીટર્ન મળશે નહી. </p>
-      <p style="font-size: 11px; font-weight: bold;color:rgb(146, 35, 35);padding-left: 10px;line-height: 20px;">
-        (૧) <span style="margin-left: 3px;"></span>બુકિંગ કરાવેલ ટ્રે કૅન્સલ કે તેમા ફેરફાર થશે નહિ.<br>
-        (ર)<span style="margin-left: 3px;"></span> કોઈ પણ ટ્રે માં ડેમેજ થાય તો તેનો ચાર્જ અલગ થી લેવા મા આવશે.<br>
-        (3)<span style="margin-left: 3px;"></span> ટ્રે ની રીટર્ન તારીખ, સમય થી લેટ આપનાર પાસે ડબલ ભાડુ લેવા મા
-        આવશે.<br>
-
-      </p>
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="section" style="margin-left: 25px">
-    <div style="display: flex; flex-direction: row; justify-content:space-between; padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px;  color: rgb(146, 28, 28);">નામ</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 85%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            nitin</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 50%;">
-          <p style="font-weight: bold; font-size: 12px;  color:rgb(146, 28, 28);">બિલ નં.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 67%;margin-left: 5px; padding-left: 10px ;  font-size: 12px; font-weight: bold;">
-            1K215</p>
-        </div>
-      </div>
-
-
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">અડ્રેસ</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 85%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            meghaninager-1 turkhaturkhaturkhaturkha roa d shree nath</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 50%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">બુકિંગ તા.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 62%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            20/03/2025</p>
-        </div>
-      </div>
-
-
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">મો.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 100%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            9589355825</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">મો.</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 88%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            9158485965</p>
-        </div>
-      </div>
-      <div style="border-bottom: 1px solid; margin-left: -20px; margin-right: -20; border-color: rgb(146, 35, 35);">
-      </div>
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -5px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">લઈ જવાની તા:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 57%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            20/10/2025</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">ટોટલ ભાડુ:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            2500/-</p>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">ભાડુ તા:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            20/10/2025</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">એડવાન્સ:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 72%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            2500/-</p>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: row; justify-content:space-between; margin-top: -15px;  padding-left: 10px;
-       padding-right: 10px;">
-        <div style="flex-direction: row; display: flex;width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color: rgb(146, 28, 28);">પાછી આપવાની તા:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 50%;margin-left: 5px; padding-left: 10px ; font-size: 12px; font-weight: bold;color: black;">
-            20/10/2025</p>
-        </div>
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <p style="font-weight: bold; font-size: 12px; color:rgb(146, 28, 28);">બાકી ભાડુ:-</p>
-          <p
-            style="border-bottom: 1px solid; border-color: rgb(146, 28, 28); width: 71%;padding-left: 10px;margin-left: 5px;  font-size: 12px; font-weight: bold;">
-            2500/-</p>
-        </div>
-
-      </div>
-      <!-- <div style="border-bottom: 1px solid; margin-left: -20px; margin-right: -20; border-color: rgb(146, 35, 35);">
-      </div> -->
-
-      <table class="items-table">
-        <thead>
-          <tr>
-            <th style="width: 5%; text-align: center; border-left: 0; ">ક્રમ</th>
-            <th style=" text-align: center; ">વિગત</th>
-            <th style="width: 5%; text-align: center; ">નંગ</th>
-            <th style="width: 10%; text-align: center; ">ભાવ</th>
-            <th style="width: 10%; text-align: center;border-right: 0; ">રકમ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td style="text-align: center;border-left: 0;">1</td>
-            <td>Item 1</td>
-            <td style=" text-align: center; ">5</td>
-            <td style=" text-align: center; ">$25.00</td>
-            <td style="text-align: center;border-right: 0;">$25.00</td>
-          </tr>
-
-        </tbody>
-      </table>
-    </div>
-    </div>
-  </div>
-</body>
-
-</html>
-
-      `;
-
       const options = {
-        html: htmlContent,
+        html: HtmlContent(userDetails, data),
         fileName: 'bill',
         directory: 'Documents',
         orientation: 'landscape',
       };
 
       const file = await RNHTMLtoPDF.convert(options);
-      Alert.alert('PDF Created', `Your PDF file is saved at ${file.filePath}`);
       sharePDFToPhone(file.filePath);
 
     } catch (error) {
       console.error('Error generating PDF:', error);
-      Alert.alert('Error', 'Failed to generate PDF');
+
     }
   };
 
@@ -451,7 +91,7 @@ const PdfBill = () => {
         if (supported) {
           await Linking.openURL(url);
         } else {
-          Alert.alert('Error', 'WhatsApp is not installed on this device');
+          // Alert.alert('Error', 'WhatsApp is not installed on this device');
         }
       };
       openWhatsapp();
@@ -461,142 +101,132 @@ const PdfBill = () => {
   };
 
 
-
-
-  // name: '',
-  // billNo: '',
-  // addresh: '',
-  // bookingDate: '',
-  // phone1: '',
-  // phone2: '',
-  // laiJavaNiDate: '',
-  // TotalBhadu: '',
-  // bhaduDate: '',
-  // advance: '',
-  // pachiAapvaniDate: '',
-  // bakiBhadu: '',
-
   return (
     <View style={{ flex: 1 }}>
+      <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+      <View>
 
+      </View>
       <ScrollView style={styles.container}>
-        <View style={styles.userDetailsContainer}>
-          <Text style={styles.header}>User Details</Text>
-          <TextInput
-            placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, name: txt })}
-            placeholder="ગ્રાહક નું નામ"
-            style={styles.input}
-          />
-          <TextInput
-            placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, addresh: txt })}
-            placeholder="સરનામું "
-            style={styles.input}
-          />
-          <DatePick placeholder={'બુકિંગ તારીખ'} title={formatDateTime(userDetails.bookingDate)} onPress={() => { setBookingDateOpen(true) }} />
+        {<View style={styles.userDetailsContainer}>
+          <Text style={styles.header}>ગ્રાહક ની માહિતી </Text>
 
+          <InputTitle title={'ગ્રાહક નું નામ'} />
           <TextInput
-            placeholderTextColor={'gray'}
+            placeholderTextColor={'lightgray'}
+            onChangeText={(txt) => setUserDetails({ ...userDetails, name: txt })}
+            placeholder="ગ્રાહક નું નામ..."
+            style={styles.input}
+          />
+
+
+          <InputTitle title={'ગ્રાહક નો ફોન નંબર_૧'} />
+          <TextInput
+            placeholderTextColor={'lightgray'}
             onChangeText={(txt) => setUserDetails({ ...userDetails, phone1: txt })}
-            placeholder="ગ્રાહક નો ફોન નંબર_૧ "
+            placeholder="ગ્રાહક નો ફોન નંબર_૧"
             keyboardType="phone-pad"
             style={styles.input}
           />
+
+          <InputTitle title={'ગ્રાહક નો ફોન નંબર_ર'} />
           <TextInput
-            placeholderTextColor={'gray'}
+            placeholderTextColor={'lightgray'}
             onChangeText={(txt) => setUserDetails({ ...userDetails, phone2: txt })}
             placeholder="ગ્રાહક નો ફોન નંબર_ર"
             keyboardType="phone-pad"
             style={styles.input}
           />
-          {/* <TextInput
-                placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, laiJavaNiDate: txt })}
-            placeholder="લઇ જવાની તારીખ "
-            keyboardType="phone-pad"
-            style={styles.input}
-          /> */}
+          <InputTitle title={'સરનામું'} />
+          <TextInput
+            maxLength={90}
+            multiline={true}
+            placeholderTextColor={'lightgray'}
+            onChangeText={(txt) => setUserDetails({ ...userDetails, addresh: txt })}
+            placeholder="સરનામું"
+            style={[styles.input, {
+              height: 70, textAlign: 'left',
+              textAlignVertical: 'top'
+            }]}
+          />
+
+          <Text style={styles.header}>બુકિંગ ની માહિતી </Text>
+          {/* <DatePick disabled={true} placeholder={'બુકિંગ તારીખ'} title={formatDateTime(userDetails.bookingDate)} onPress={() => { setBookingDateOpen(true) }} /> */}
+
+          <InputTitle title={'ટ્રે લઇ જવાની તારીખ'} />
           <DatePick placeholder={'લઇ જવાની તારીખ'} title={formatDateTime(userDetails.laiJavaNiDate)} onPress={() => { setLaiJavaNiDateOpen(true) }} />
-
-          <TextInput
-            placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, TotalBhadu: txt })}
-            placeholder="ટોટલ ભાડુ"
-            keyboardType="phone-pad"
-            style={styles.input}
-          />
-          {/* <TextInput
-            placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, bhaduDate: txt })}
-            placeholder="ભાડુ આપ્યાં ની તારીખ "
-            keyboardType="phone-pad"
-            style={styles.input}
-          /> */}
-          <DatePick placeholder={'ભાડુ આપ્યાં ની તારીખ'} title={formatDateTime(userDetails.bhaduDate)} onPress={() => { setBhaduApiyaNIDateOpen(true) }} />
-
-          <TextInput
-            placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, advance: txt })}
-            placeholder="એડવાન્સ"
-            keyboardType="phone-pad"
-            style={styles.input}
-          />
-          {/* <TextInput
-            placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, pachiAapvaniDate: txt })}
-            placeholder="પાછી આપવાની તારીખ"
-            keyboardType="phone-pad"
-            style={styles.input}
-          /> */}
+          <InputTitle title={'ટ્રે પાછી આપવાની તારીખ'} />
           <DatePick placeholder={'પાછી આપવાની તારીખ'} title={formatDateTime(userDetails.pachiAapvaniDate)} onPress={() => { setPachiApvaNiDateOpen(true) }} />
 
-          <TextInput
-            placeholderTextColor={'gray'}
-            onChangeText={(txt) => setUserDetails({ ...userDetails, bakiBhadu: txt })}
-            placeholder="બાકી ભાડુ"
-            keyboardType="phone-pad"
-            style={styles.input}
-          />
-        </View>
+          <View>
+            <InputTitle title={'એડવાન્સ'} />
+            <TextInput
+              placeholderTextColor={'gray'}
+              value={userDetails.advance.toString()}
+              onChangeText={(txt) => setUserDetails({ ...userDetails, advance: txt })}
+              placeholder="એડવાન્સ"
+              keyboardType="phone-pad"
+              style={[styles.input, { alignSelf: 'flex-start' }]}
+            />
+
+            {/* <InputTitle title={'બાકી ભાડુ'} />
+            <DatePick title={userDetails.bakiBhadu} disabled={true} />
+
+            <InputTitle title={'ટોટલ ભાડુ'} />
+            <DatePick title={userDetails.TotalBhadu} disabled={true} /> */}
+
+          </View>
+          <InputTitle title={'ભાડુ આપ્યાં ની તારીખ'} />
+          <DatePick placeholder={'ભાડુ આપ્યાં ની તારીખ'} title={formatDateTime(userDetails.bhaduDate)} onPress={() => { setBhaduApiyaNIDateOpen(true) }} />
+
+        </View>}
 
 
-        {/* //item section */}
-        <View style={styles.itemsContainer}>
-          <Text style={styles.header}>Items</Text>
-          {items.map((item, index) => (
-            <View key={index} style={styles.itemContainer}>
+        {<View style={styles.itemsContainer}>
+          <Text style={[styles.header, { paddingHorizontal: 20, marginTop: -5 }]}>ટ્રે ની માહિતી </Text>
+          <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', marginHorizontal: 10 }}>
+            {data.map((item, index) => (
+              <View key={index} style={{ width: '48%', marginBottom: 15, backgroundColor: 'white', elevation: 5, padding: 10, borderRadius: 8 }}>
+                <View style={{ flexDirection: 'row', }}>
+                  <Image source={{ uri: item.img }} style={{ height: 50, width: 50, borderRadius: 5 }} />
+                  <View style={{ flexDirection: 'column', marginLeft: 10, flex: 1 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 15, }} numberOfLines={2}>{item.name + ' ' + item.trayNo}</Text>
+                    <Text style={{ fontWeight: 'bold', marginTop: 2, fontSize: 15, color: 'green', opacity: 0.8 }}>{'Rs.' + item.price}</Text>
+                  </View>
+                </View>
 
-              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Text style={{ fontWeight: 'bold', }}>{'Item ' + (index + 1)}</Text>
-                <TouchableOpacity style={{}} onPress={() => removeItem(index)}>
-                  <Image style={{ height: 18, width: 18, tintColor: 'red' }} source={{ uri: 'https://cdn0.iconfinder.com/data/icons/ui-essentials-2-3/32/user_interface_ui_basic_app_trash_bin_delete-512.png' }} />
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 7, marginTop: 5 }}>
+                    <TouchableOpacity onPress={() => dispatch(itemCountDecrease(item.trayNo))} style={{ height: 20, width: 30, justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightyellow', borderRadius: 5 }}  >
+                      <Text style={{ textAlign: 'center', color: 'rgb(146, 35, 35)', fontSize: 18, lineHeight: 19, fontWeight: 'bold' }}>-</Text>
+                    </TouchableOpacity>
+                    <Text>{item.itemCount}</Text>
+                    <TouchableOpacity onPress={() => dispatch(itemCountIncrease(item.trayNo))} style={{ height: 20, width: 30, justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightyellow', borderRadius: 5 }}  >
+                      <Text style={{ textAlign: 'center', color: 'rgb(146, 35, 35)', lineHeight: 19, fontWeight: 'bold' }}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <TouchableOpacity onPress={() => dispatch(RemoveToCart(item))}>
+                    <Image
+                      style={{ height: 18, width: 18, tintColor: 'red' }}
+                      source={{ uri: 'https://cdn0.iconfinder.com/data/icons/ui-essentials-2-3/32/user_interface_ui_basic_app_trash_bin_delete-512.png' }}
+                    />
+                  </TouchableOpacity>
+                </View>
+
               </View>
-              <TextInput
-                placeholderTextColor={'gray'}
-                style={styles.input}
-                placeholder={`Enter item name`}
-                value={item.name}
-                onChangeText={(value) => handleItemChange(index, 'name', value)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder={`Enter item Price`}
-                value={item.price}
-                onChangeText={(value) => handleItemChange(index, 'price', value)}
-                keyboardType="numeric"
-              />
-            </View>
-          ))}
-          <CustomButton style={{
-            height: 50, width: 50, borderRadius: 50, alignSelf: 'flex-end',
-            marginBottom: 100
-
-          }} title="+" onPress={addItem} />
-        </View>
+            ))}
+          </View>
+          <TouchableOpacity onPress={() => setVisible(true)} style={{
+            backgroundColor: 'rgb(146, 35, 35)', height: 45, width: 45, borderRadius: 50,
+            marginBottom: 80, justifyContent: 'center', alignItems: 'center', alignSelf: 'flex-end', marginRight: 5
+          }}>
+            <Text style={{ textAlign: 'center', color: 'white', fontWeight: 'bold', fontSize: 16 }}>+</Text>
+          </TouchableOpacity>
+        </View>}
       </ScrollView>
-      <CustomButton style={{ position: 'absolute', bottom: 10, left: 10, right: 10 }} title="Generate Bill PDF" onPress={generatePDF} />
+      <ButtonComp Total={'Rs.' + userDetails.TotalBhadu + '/-'}
+        style={{ position: 'absolute', bottom: 10, left: 10, right: 10 }}
+        title="Generate Order" onPress={generatePDF} />
       <DatePicker
         modal
         open={bookingDateOpen}
@@ -645,6 +275,7 @@ const PdfBill = () => {
           setPachiApvaNiDateOpen(false)
         }}
       />
+      <ItemModal visible={visible} save={() => setVisible(false)} />
 
     </View>
 
@@ -659,63 +290,46 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   userDetailsContainer: {
-    backgroundColor: '#000',
-    padding: 15,
+    backgroundColor: 'white',
+    padding: 20,
 
   },
-  billDetailsContainer: {
-    backgroundColor: '#fff',
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 20,
-  },
+
   itemsContainer: {
     backgroundColor: '#fff',
     padding: 10,
-    margin: 10,
-    borderRadius: 10
+    borderRadius: 10,
 
   },
   itemContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#f9f9f9', borderRadius: 10, marginTop: 10, marginHorizontal: 10,
     padding: 10,
 
   },
   header: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 15,
-    color: '#888',
+    marginVertical: 20,
+    marginLeft: -20,
+    color: 'white',
+    backgroundColor: 'rgb(146, 35, 35)', width: 180, paddingHorizontal: 10, borderTopRightRadius: 20, borderBottomRightRadius: 20, height: 35, lineHeight: 35,
   },
-  label: {
-    fontSize: 16,
-    marginVertical: 10,
-    color: '#333',
-  },
+
   input: {
-    height: 40,
-    borderColor: 'black',
-    borderWidth: 1,
+    height: 45,
+    borderWidth: 2,
+    borderColor: 'rgb(146, 35, 35)',
     borderRadius: 10,
-    paddingLeft: 10,
-    marginBottom: 10,
+    paddingHorizontal: 10,
+    marginBottom: 8,
     fontSize: 15,
     backgroundColor: '#fff',
     fontWeight: 'bold'
   },
-  textArea: {
-    height: 80,
-  },
+
 });
 
-const DatePick = ({ title, onPress, placeholder }) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={{ backgroundColor: 'white', height: 40, borderRadius: 10, justifyContent: 'space-between', paddingHorizontal: 10, marginBottom: 10, flexDirection: 'row', alignItems: 'center' }}>
-      <Text style={{ color: 'gray', flex: 1, fontWeight: 'bold', fontSize: 15 }}>{placeholder}</Text>
-      <Text style={{ color: 'black', fontSize: 15, fontWeight: 'bold' }}>{title}</Text>
-    </TouchableOpacity>
-  )
-}
+
 // import React from 'react';
 // import { View, Button, Linking } from 'react-native';
 // import Share from 'react-native-share';
